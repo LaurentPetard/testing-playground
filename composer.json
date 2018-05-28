@@ -13,20 +13,20 @@
     },
     "require": {
         "php": "^7.1",
-        "beberlei/assert": "^2.9",
         "ramsey/uuid": "^3.7",
         "roave/security-advisories": "dev-master",
         "matthiasnoback/php-workshop-tools": "^0.21"
     },
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "Common\\": "src/Common",
+            "Warehouse\\": "src/Warehouse/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Test\\Acceptance\\": "test/Acceptance",
-            "": ["test/Unit", "test/Integration"]
+            "Warehouse\\": ["test/Unit", "test/Integration"]
         },
         "files": [
             "vendor/phpunit/phpunit/src/Framework/Assert/Functions.php"

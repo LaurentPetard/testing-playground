@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Common;
 
-use Assert\Assertion;
+use Webmozart\Assert\Assert;
 
 abstract class AggregateId
 {
@@ -22,8 +22,8 @@ abstract class AggregateId
      */
     public static function fromString(string $id)
     {
-        Assertion::notEmpty($id);
-        Assertion::uuid($id);
+        Assert::notEmpty($id);
+        Assert::uuid($id);
 
         $aggregateId = new static();
         $aggregateId->id = $id;

@@ -2,12 +2,14 @@ version: '3'
 
 services:
     php:
-        image: matthiasnoback/advanced_testing_workshop_devtools
+        image: 'matthiasnoback/advanced_testing_workshop_devtools'
         volumes:
-            - ./:/opt:cached
-            - ~/.composer:/home/.composer:cached
+            - './:/opt'
+            - '~/.config/composer:/home/.composer_home'
+            - '~/.cache/composer:/home/.composer_cache'
         environment:
-            COMPOSER_HOME: /home/.composer
-            XDEBUG_CONFIG: "remote_host=${DOCKER_HOST_IP}"
-            PHP_IDE_CONFIG: "serverName=php"
-        user: ${HOST_UID}:${HOST_GID}
+            COMPOSER_HOME: '/home/.composer_home'
+            COMPOSER_CACHE_DIR: '/home/.composer_cache'
+            XDEBUG_CONFIG: 'remote_host=${DOCKER_HOST_IP}'
+            PHP_IDE_CONFIG: 'serverName=php'
+        user: '${HOST_UID}:${HOST_GID}'
