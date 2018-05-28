@@ -1,7 +1,4 @@
 <?php
-
-declare(strict_types=1);
-
 /*
  * This file is part of TestingPlayground.
  *
@@ -13,22 +10,18 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Product;
 
-/**
- * @author Damien Carcel <damien.carcel@gmail.com>
- */
-class Product
+use PHPUnit\Framework\TestCase;
+
+class ProductTest extends TestCase
 {
-    private $id;
-
-    private $name;
-
-    public function __construct()
+    /**
+     * @test
+     */
+    public function it_creates_a_product()
     {
-        $this->id = new ProductId();
-    }
+        $product = new Product();
 
-    public function id(): ProductId
-    {
-        return $this->id;
+        $this->assertInstanceOf(Product::class, $product);
+        $this->assertInstanceOf(ProductId::class, $product->id());
     }
 }

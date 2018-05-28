@@ -14,10 +14,11 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
 use Ramsey\Uuid\UuidFactory;
-use Warehouse\Domain\Model\Product\Product;
+use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
 use Warehouse\Domain\Model\Supplier\Supplier;
+use Warehouse\Domain\Model\Supplier\SupplierId;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -28,16 +29,21 @@ class PurchaseOrder
 
     private $lines;
 
-    private $supplier;
+    private $supplierId;
 
     private $status;
 
-    public function __construct(Supplier $supplier)
+    private function __construct(SupplierId $supplierId)
     {
         $this->id = (new UuidFactory)->uuid4();
-        $this->supplier = $supplier;
+        $this->supplierId = $supplierId;
         $this->status = new NotReceived();
         $this->lines = [];
+    }
+
+    public static function fromSupplier(Supplier $supplier)
+    {
+        return new self($supplier->id());
     }
 
     public function status(): Status
@@ -45,10 +51,10 @@ class PurchaseOrder
         return $this->status;
     }
 
-    public function addLine(Product $product, OrderedQuantity $quantity): void
+    public function addLine(ProductId $productId, OrderedQuantity $quantity): void
     {
         $lineNumber = new LineNumber(count($this->lines) + 1);
-        $this->lines[] = new Line($product, $quantity, $lineNumber);
+        $this->lines[] = new Line($productId, $quantity, $lineNumber);
     }
 
     public function lines(): array

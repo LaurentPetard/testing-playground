@@ -13,22 +13,18 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Product;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class Product
+class ProductId
 {
+    /** @var \Ramsey\Uuid\UuidInterface */
     private $id;
-
-    private $name;
 
     public function __construct()
     {
-        $this->id = new ProductId();
-    }
-
-    public function id(): ProductId
-    {
-        return $this->id;
+        $this->id = Uuid::uuid4();
     }
 }

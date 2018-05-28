@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
-use Warehouse\Domain\Model\Product\Product;
+use Warehouse\Domain\Model\Product\ProductId;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class Line
 {
-    private $product;
+    private $productId;
 
     private $lineNumber;
 
@@ -28,9 +28,9 @@ class Line
 
     private $receivedquantity;
 
-    public function __construct(Product $product, OrderedQuantity $orderedQuantity, LineNumber $lineNumber)
+    public function __construct(ProductId $productId, OrderedQuantity $orderedQuantity, LineNumber $lineNumber)
     {
-        $this->product = $product;
+        $this->productId = $productId;
         $this->lineNumber = $lineNumber;
         $this->orderedQuantity = $orderedQuantity;
         $this->receivedquantity = new ReceivedQuantity(0);

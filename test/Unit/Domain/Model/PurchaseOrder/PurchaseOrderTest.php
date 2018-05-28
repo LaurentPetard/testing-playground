@@ -23,7 +23,8 @@ class PurchaseOrderTest extends TestCase
     public function i_can_create_a_purshase_order(): void
     {
         $supplier = new Supplier();
-        $purchaseOrder = new PurchaseOrder($supplier);
+
+        $purchaseOrder = PurchaseOrder::fromSupplier($supplier);
 
         $this->assertInstanceOf(NotReceived::class, $purchaseOrder->status());
         $this->assertCount(0, $purchaseOrder->lines());
@@ -35,9 +36,10 @@ class PurchaseOrderTest extends TestCase
     public function it_adds_a_line(): void
     {
         $supplier = new Supplier();
+        $product = new Product();
 
-        $purchaseOrder = new PurchaseOrder($supplier);
-        $purchaseOrder->addLine(new Product(), new OrderedQuantity(42));
+        $purchaseOrder = PurchaseOrder::fromSupplier($supplier);
+        $purchaseOrder->addLine($product->id(), new OrderedQuantity(42));
 
         $this->assertCount(1, $purchaseOrder->lines());
     }

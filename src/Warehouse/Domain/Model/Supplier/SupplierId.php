@@ -11,24 +11,20 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Warehouse\Domain\Model\Product;
+namespace Warehouse\Domain\Model\Supplier;
+
+use Ramsey\Uuid\Uuid;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class Product
+class SupplierId
 {
+    /** @var \Ramsey\Uuid\UuidInterface */
     private $id;
-
-    private $name;
 
     public function __construct()
     {
-        $this->id = new ProductId();
-    }
-
-    public function id(): ProductId
-    {
-        return $this->id;
+        $this->id = Uuid::uuid4();
     }
 }
