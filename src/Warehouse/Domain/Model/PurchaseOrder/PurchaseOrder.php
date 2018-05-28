@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
 use Ramsey\Uuid\UuidFactory;
+use Warehouse\Domain\Model\Product\Product;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
 use Warehouse\Domain\Model\Supplier\Supplier;
@@ -31,15 +32,12 @@ class PurchaseOrder
 
     private $status;
 
-    public function __construct(Supplier $supplier, iterable $lines)
+    public function __construct(Supplier $supplier)
     {
         $this->id = (new UuidFactory)->uuid4();
         $this->supplier = $supplier;
         $this->status = new NotReceived();
-
-        foreach ($lines as $line) {
-            $this->addLine($line);
-        }
+        $this->lines = [];
     }
 
     public function status(): Status
@@ -47,8 +45,14 @@ class PurchaseOrder
         return $this->status;
     }
 
-    private function addLine(Line $line): void
+    public function addLine(Product $product, OrderedQuantity $quantity): void
     {
-        $this->lines[] = $line;
+        $lineNumber = new LineNumber(count($this->lines) + 1);
+        $this->lines[] = new Line($product, $quantity, $lineNumber);
+    }
+
+    public function lines(): array
+    {
+        return $this->lines;
     }
 }

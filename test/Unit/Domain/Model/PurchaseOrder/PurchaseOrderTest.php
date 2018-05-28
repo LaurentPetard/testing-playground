@@ -11,6 +11,7 @@
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
 use PHPUnit\Framework\TestCase;
+use Warehouse\Domain\Model\Product\Product;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\Supplier\Supplier;
 
@@ -22,10 +23,22 @@ class PurchaseOrderTest extends TestCase
     public function i_can_create_a_purshase_order(): void
     {
         $supplier = new Supplier();
-        $lines = [new Line()];
-
-        $purchaseOrder = new PurchaseOrder($supplier, $lines);
+        $purchaseOrder = new PurchaseOrder($supplier);
 
         $this->assertInstanceOf(NotReceived::class, $purchaseOrder->status());
+        $this->assertCount(0, $purchaseOrder->lines());
+    }
+
+    /**
+     * @test
+     */
+    public function it_adds_a_line(): void
+    {
+        $supplier = new Supplier();
+
+        $purchaseOrder = new PurchaseOrder($supplier);
+        $purchaseOrder->addLine(new Product(), new OrderedQuantity(42));
+
+        $this->assertCount(1, $purchaseOrder->lines());
     }
 }
