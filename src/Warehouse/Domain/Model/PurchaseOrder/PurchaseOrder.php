@@ -77,6 +77,15 @@ class PurchaseOrder extends Aggregate
         return $this->lines;
     }
 
+    public function getReceivedQuantityForProduct(ProductId $productId): ReceivedQuantity
+    {
+        try {
+            $line = $this->getLineForProduct($productId);
+        } catch ($e) {
+            $line =
+        }
+    }
+
     private function getLineForProduct(ProductId $productId): Line
     {
         foreach ($this->lines as $line)

@@ -24,4 +24,9 @@ class ReceivedQuantity
 
         return new self($totalReceived);
     }
+
+    public function toInt(): int
+    {
+        return $this->quantity;
+    }
 }
