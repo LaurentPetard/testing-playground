@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
 use Warehouse\Domain\Model\Product\ProductId;
+use Warehouse\Domain\Model\ReceiptNote;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -26,13 +27,26 @@ class Line
 
     private $orderedQuantity;
 
-    private $receivedquantity;
+    private $receivedQuantity;
 
     public function __construct(ProductId $productId, OrderedQuantity $orderedQuantity, LineNumber $lineNumber)
     {
         $this->productId = $productId;
         $this->lineNumber = $lineNumber;
         $this->orderedQuantity = $orderedQuantity;
-        $this->receivedquantity = new ReceivedQuantity(0);
+        $this->receivedQuantity = new ReceivedQuantity(0);
+    }
+
+    /**
+     * @return ProductId
+     */
+    public function getProductId(): ProductId
+    {
+        return $this->productId;
+    }
+
+    public function receive(ReceiptNote\ReceivedQuantity $quantity): void
+    {
+        $this->receivedQuantity = $this->receivedQuantity->add($quantity);
     }
 }

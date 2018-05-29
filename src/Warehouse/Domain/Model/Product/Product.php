@@ -16,6 +16,7 @@ namespace Warehouse\Domain\Model\Product;
 use Common\Aggregate;
 use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
+use Warehouse\Domain\Model\Product\Event\ProductCreated;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -26,9 +27,12 @@ class Product extends Aggregate
 
     private $name;
 
-    public function __construct()
+    public function __construct(string $name)
     {
         $this->id = ProductId::fromString(Uuid::uuid4()->toString());
+        $this->name = $name;
+
+        $this->recordThat(new ProductCreated($this->id, $this->name));
     }
 
     public function id(): ProductId

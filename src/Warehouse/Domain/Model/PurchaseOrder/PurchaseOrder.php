@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
 use Common\Aggregate;
-use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
+use Warehouse\Domain\Model\PurchaseOrder\Event\PurchaseOrderCreated;
+use Warehouse\Domain\Model\PurchaseOrder\Event\PurchaseOrderLineAdded;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
 use Warehouse\Domain\Model\Supplier\SupplierId;
+use Warehouse\Domain\Model\ReceiptNote;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -40,6 +42,8 @@ class PurchaseOrder extends Aggregate
         $this->supplierId = $supplierId;
         $this->status = new NotReceived();
         $this->lines = [];
+
+        $this->recordThat(new PurchaseOrderCreated($this));
     }
 
     public function id(): PurchaseOrderId
@@ -55,11 +59,33 @@ class PurchaseOrder extends Aggregate
     public function addProduct(ProductId $productId, OrderedQuantity $quantity): void
     {
         $lineNumber = new LineNumber(count($this->lines) + 1);
-        $this->lines[] = new Line($productId, $quantity, $lineNumber);
+        $line = new Line($productId, $quantity, $lineNumber);;
+        $this->lines[] = $line;
+
+        $this->recordThat(new PurchaseOrderLineAdded($line));
+    }
+
+    public function receiveProduct(ProductId $productId, ReceiptNote\ReceivedQuantity $receivedQuantity)
+    {
+        $line = $this->getLineForProduct($productId);
+
+        $line->receive($receivedQuantity);
     }
 
     public function lines(): array
     {
         return $this->lines;
+    }
+
+    private function getLineForProduct(ProductId $productId): Line
+    {
+        foreach ($this->lines as $line)
+        {
+            if ($line->getProductId->equals($productId)) {
+                return $line;
+            }
+        }
+
+        throw new \Exception('line not found');
     }
 }

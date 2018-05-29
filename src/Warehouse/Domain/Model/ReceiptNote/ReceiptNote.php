@@ -9,6 +9,7 @@ use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderId;
+use Warehouse\Domain\Model\ReceiptNote\Event\ProductReceived;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -34,7 +35,10 @@ class ReceiptNote extends Aggregate
             throw new \LogicException();
         }
 
-        $this->lines[(string) $productId] = new ReceiptNoteLine($productId, $receivedQuantity);
+        $line = new ReceiptNoteLine($productId, $receivedQuantity);
+        $this->lines[(string) $productId] = $line;
+
+        $this->recordThat(new ProductReceived($line));
     }
 
     public function id(): ReceiptNoteId

@@ -16,4 +16,9 @@ class ReceivedQuantity
 
         $this->quantity = $quantity;
     }
+
+    public function toInt()
+    {
+        $this->quantity;
+    }
 }
