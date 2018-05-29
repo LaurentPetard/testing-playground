@@ -16,7 +16,7 @@ abstract class Aggregate
         $this->events[] = $event;
     }
 
-    abstract public function id(): AggregateId;
+    abstract public function id();
 
     public function recordedEvents(): array
     {

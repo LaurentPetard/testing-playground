@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\ReceiptNote;
 
+use Common\Aggregate;
+use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderId;
@@ -11,7 +13,7 @@ use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderId;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class ReceiptNote
+class ReceiptNote extends Aggregate
 {
     private $id;
 

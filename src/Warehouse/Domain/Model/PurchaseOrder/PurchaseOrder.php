@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
+use Common\Aggregate;
+use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
@@ -22,7 +24,7 @@ use Warehouse\Domain\Model\Supplier\SupplierId;
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class PurchaseOrder
+class PurchaseOrder extends Aggregate
 {
     private $id;
 
@@ -40,12 +42,17 @@ class PurchaseOrder
         $this->lines = [];
     }
 
+    public function id(): PurchaseOrderId
+    {
+        return $this->id;
+    }
+
     public function status(): Status
     {
         return $this->status;
     }
 
-    public function addLine(ProductId $productId, OrderedQuantity $quantity): void
+    public function addProduct(ProductId $productId, OrderedQuantity $quantity): void
     {
         $lineNumber = new LineNumber(count($this->lines) + 1);
         $this->lines[] = new Line($productId, $quantity, $lineNumber);

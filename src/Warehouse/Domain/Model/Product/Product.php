@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Product;
 
+use Common\Aggregate;
+use Common\AggregateId;
 use Ramsey\Uuid\Uuid;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class Product
+class Product extends Aggregate
 {
     private $id;
 

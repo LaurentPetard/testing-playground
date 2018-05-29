@@ -39,7 +39,7 @@ class PurchaseOrderTest extends TestCase
         $product = new Product();
 
         $purchaseOrder = new PurchaseOrder($supplier->id());
-        $purchaseOrder->addLine($product->id(), new OrderedQuantity(42));
+        $purchaseOrder->addProduct($product->id(), new OrderedQuantity(42));
 
         $this->assertCount(1, $purchaseOrder->lines());
     }
