@@ -27,4 +27,9 @@ class ProductId
     {
         $this->id = Uuid::uuid4();
     }
+
+    public function __toString(): string
+    {
+        return $this->id->toString();
+    }
 }
