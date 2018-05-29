@@ -7,9 +7,7 @@ use Webmozart\Assert\Assert;
 
 abstract class AggregateId
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $id;
 
     private function __construct()

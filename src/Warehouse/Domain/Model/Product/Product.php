@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Product;
 
+use Ramsey\Uuid\Uuid;
+
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
@@ -24,7 +26,7 @@ class Product
 
     public function __construct()
     {
-        $this->id = new ProductId();
+        $this->id = ProductId::fromString(Uuid::uuid4()->toString());
     }
 
     public function id(): ProductId

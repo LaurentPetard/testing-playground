@@ -22,6 +22,5 @@ class SupplierTest extends TestCase
         $supplier = new Supplier();
 
         $this->assertInstanceOf(Supplier::class, $supplier);
-        $this->assertInstanceOf(SupplierId::class, $supplier->id());
     }
 }

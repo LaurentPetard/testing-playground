@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\ReceiptNote;
 
+use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderId;
 
@@ -21,7 +22,7 @@ class ReceiptNote
     public function __construct(PurchaseOrderId $purchaseOrderId)
     {
         $this->purchaseOrderId = $purchaseOrderId;
-        $this->id = new ReceiptNoteId();
+        $this->id = ReceiptNoteId::fromString(Uuid::uuid4()->toString());
         $this->lines = [];
     }
 

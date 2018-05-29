@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
+use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
@@ -33,7 +34,7 @@ class PurchaseOrder
 
     public function __construct(SupplierId $supplierId)
     {
-        $this->id = new PurchaseOrderId();
+        $this->id = PurchaseOrderId::fromString(Uuid::uuid4()->toString());
         $this->supplierId = $supplierId;
         $this->status = new NotReceived();
         $this->lines = [];

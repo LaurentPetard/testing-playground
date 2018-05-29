@@ -13,23 +13,11 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Product;
 
-use Ramsey\Uuid\Uuid;
+use Common\AggregateId;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class ProductId
+class ProductId extends AggregateId
 {
-    /** @var \Ramsey\Uuid\UuidInterface */
-    private $id;
-
-    public function __construct()
-    {
-        $this->id = Uuid::uuid4();
-    }
-
-    public function __toString(): string
-    {
-        return $this->id->toString();
-    }
 }

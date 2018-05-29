@@ -22,6 +22,5 @@ class ProductTest extends TestCase
         $product = new Product();
 
         $this->assertInstanceOf(Product::class, $product);
-        $this->assertInstanceOf(ProductId::class, $product->id());
     }
 }
