@@ -24,7 +24,7 @@ class PurchaseOrderTest extends TestCase
     {
         $supplier = new Supplier();
 
-        $purchaseOrder = PurchaseOrder::fromSupplier($supplier);
+        $purchaseOrder = new PurchaseOrder($supplier->id());
 
         $this->assertInstanceOf(NotReceived::class, $purchaseOrder->status());
         $this->assertCount(0, $purchaseOrder->lines());
@@ -38,7 +38,7 @@ class PurchaseOrderTest extends TestCase
         $supplier = new Supplier();
         $product = new Product();
 
-        $purchaseOrder = PurchaseOrder::fromSupplier($supplier);
+        $purchaseOrder = new PurchaseOrder($supplier->id());
         $purchaseOrder->addLine($product->id(), new OrderedQuantity(42));
 
         $this->assertCount(1, $purchaseOrder->lines());

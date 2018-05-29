@@ -13,11 +13,9 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\PurchaseOrder;
 
-use Ramsey\Uuid\UuidFactory;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
-use Warehouse\Domain\Model\Supplier\Supplier;
 use Warehouse\Domain\Model\Supplier\SupplierId;
 
 /**
@@ -33,17 +31,12 @@ class PurchaseOrder
 
     private $status;
 
-    private function __construct(SupplierId $supplierId)
+    public function __construct(SupplierId $supplierId)
     {
-        $this->id = (new UuidFactory)->uuid4();
+        $this->id = new PurchaseOrderId();
         $this->supplierId = $supplierId;
         $this->status = new NotReceived();
         $this->lines = [];
-    }
-
-    public static function fromSupplier(Supplier $supplier)
-    {
-        return new self($supplier->id());
     }
 
     public function status(): Status
