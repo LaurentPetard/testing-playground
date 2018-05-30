@@ -6,7 +6,7 @@ namespace Warehouse\Domain\Model\PurchaseOrder\Event;
 
 use Warehouse\Domain\Model\PurchaseOrder\Line;
 
-class PurchaseOrderLineAdded
+class ProductReceived
 {
     /** @var Line */
     private $purchaseOrderLine;
@@ -20,5 +20,4 @@ class PurchaseOrderLineAdded
     {
         return $this->purchaseOrderLine;
     }
-
 }

@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Warehouse\Domain\ReadModel;
+namespace Warehouse\Domain\Model\Balance;
 
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderRepository;
@@ -31,11 +31,6 @@ class BalanceRepository
 
     public function getForProduct(ProductId $productId): Balance
     {
-        $purchaseOrders = $this->purchaseOrderRepository->findAll();
 
-        $balanceLevel = new BalanceLevel();
-        foreach ($purchaseOrders as $purchaseOrder) {
-            $balanceLevel->addReceivedQuantity($purchaseOrder->getReceivedQuantityForProduct($productId));
-        }
     }
 }
