@@ -13,30 +13,23 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\Balance;
 
+use PHPUnit\Framework\TestCase;
 use Warehouse\Domain\Model\ReceiptNote\ReceivedQuantity;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
-class BalanceLevel
+class BalanceLevelTest extends TestCase
 {
-    private $level = 0;
-
     /**
-     * @param int $level
+     * @test
      */
-    public function __construct(int $level = 0)
+    public function it_increases_the_balance_level()
     {
-        $this->level = $level;
-    }
+        $balanceLevel = new BalanceLevel(42);
+        $receivedQuantity = new ReceivedQuantity(2);
 
-    public function receiveProducts(ReceivedQuantity $receivedQuantity): BalanceLevel
-    {
-        return new static($this->level += $receivedQuantity->toInt());
-    }
-
-    public function toInt(): int
-    {
-        return $this->level;
+        $balanceLevel = $balanceLevel->receiveProducts($receivedQuantity);
+        $this->assertSame(44, $balanceLevel->toInt());
     }
 }

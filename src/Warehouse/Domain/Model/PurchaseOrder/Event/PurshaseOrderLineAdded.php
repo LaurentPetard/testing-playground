@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Warehouse\Domain\Model\PurchaseOrder\Event;
 
-use Warehouse\Domain\Model\PurchaseOrder\Line;
-
-class ProductReceived
+class PurshaseOrderLineAdded
 {
     /** @var Line */
     private $purchaseOrderLine;

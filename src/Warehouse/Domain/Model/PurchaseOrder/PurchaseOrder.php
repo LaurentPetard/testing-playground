@@ -17,7 +17,7 @@ use Common\Aggregate;
 use Ramsey\Uuid\Uuid;
 use Warehouse\Domain\Model\Product\ProductId;
 use Warehouse\Domain\Model\PurchaseOrder\Event\PurchaseOrderCreated;
-use Warehouse\Domain\Model\PurchaseOrder\Event\ProductReceived;
+use Warehouse\Domain\Model\PurchaseOrder\Event\PurshaseOrderLineAdded;
 use Warehouse\Domain\Model\PurchaseOrder\Status\NotReceived;
 use Warehouse\Domain\Model\PurchaseOrder\Status\Status;
 use Warehouse\Domain\Model\Supplier\SupplierId;
@@ -62,7 +62,7 @@ class PurchaseOrder extends Aggregate
         $line = new Line($productId, $quantity, $lineNumber);;
         $this->lines[] = $line;
 
-        $this->recordThat(new ProductReceived($line));
+        $this->recordThat(new PurshaseOrderLineAdded($line));
     }
 
     public function receiveProduct(ProductId $productId, ReceiptNote\ReceivedQuantity $receivedQuantity)

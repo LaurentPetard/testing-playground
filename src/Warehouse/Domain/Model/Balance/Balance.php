@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\Balance;
 
 use Warehouse\Domain\Model\Product\ProductId;
+use Warehouse\Domain\Model\ReceiptNote\ReceivedQuantity;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
@@ -50,5 +51,10 @@ class Balance
     public function level(): BalanceLevel
     {
         return $this->level;
+    }
+
+    public function receiveProducts(ReceivedQuantity $receivedQuantity): void
+    {
+        $this->level = $this->level->receiveProducts($receivedQuantity);
     }
 }

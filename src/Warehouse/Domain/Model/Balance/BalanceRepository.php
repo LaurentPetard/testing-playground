@@ -14,23 +14,22 @@ declare(strict_types=1);
 namespace Warehouse\Domain\Model\Balance;
 
 use Warehouse\Domain\Model\Product\ProductId;
-use Warehouse\Domain\Model\PurchaseOrder\PurchaseOrderRepository;
 
 /**
  * @author Damien Carcel <damien.carcel@gmail.com>
  */
 class BalanceRepository
 {
-    /** @var PurchaseOrderRepository */
-    private $purchaseOrderRepository;
-
-    public function __construct(PurchaseOrderRepository $purchaseOrderRepository)
-    {
-        $this->purchaseOrderRepository = $purchaseOrderRepository;
-    }
+    /** @var Balance[] */
+    private $balances = [];
 
     public function getForProduct(ProductId $productId): Balance
     {
+        return $this->balances[(string) $productId] ?? new Balance($productId, new BalanceLevel());
+    }
 
+    public function save(Balance $balance): void
+    {
+        $this->balances[(string) $balance->productId()] = $balance;
     }
 }
